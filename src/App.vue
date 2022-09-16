@@ -4,9 +4,11 @@ import Wrapper from './components/wrapper.vue'
 let imgs: string[] = []
 let heightArray: number[] = []
 const viewData = ref<Array<string[]>>([])
-const columns = 2
+const columns = 8
 let currentIndex = 0 // 添加数据量
 let i = 0 // 添加队列指针
+
+let initLock = false
 
 for (let i = 0; i < columns; i++) {
   viewData.value.push([])
@@ -31,8 +33,6 @@ function initImgs() {
 }
 
 async function load() {
-  // console.log(viewData.value[0].length, viewData.value[1].length)
-  await nextTick()
   const colmuns = document.querySelectorAll('.item-column')
   const item = colmuns[i].lastElementChild
 
@@ -46,6 +46,7 @@ async function load() {
   i = checkHeight()
   // 当前数据是否加载完成
   if (currentIndex === imgs.length) {
+    initLock = false
     return
   }
   setViewData(imgs)
@@ -62,7 +63,11 @@ function checkHeight() {
 }
 
 function initData() {
-  initImgs()
+  if(!initLock) {
+    initLock = true
+    initImgs()
+  }
+  
 }
 </script>
 
