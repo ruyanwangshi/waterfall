@@ -84,11 +84,12 @@ function initData() {
 
 <template>
   <Wrapper class="wrapper" @load="initData">
-    <transition-group name="list" tag="div" class="item-column" v-for="(columnItem, index) in viewData" :key="index">
+    <!-- <transition-group name="list" tag="div" class="item-column" v-for="(columnItem, index) in viewData" :key="index"> -->
+    <div class="item-column" v-for="(item) of columns" :key="item">
       <!-- <div class="img-item" v-for="(item, indey) in columnItem" :key="indey">
         <img :src="item" alt="" @load="load" />
       </div> -->
-    </transition-group>
+    </div>
   </Wrapper>
 </template>
 
@@ -115,10 +116,22 @@ function initData() {
   .img-item {
     padding: 4px;
     box-sizing: border-box;
+    animation: identifier 0.5s ease;
     img {
       object-fit: cover;
       object-position: center;
       width: 100%;
+    }
+  }
+
+  @keyframes identifier {
+    0%{
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100%{
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
